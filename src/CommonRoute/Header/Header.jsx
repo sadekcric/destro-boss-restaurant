@@ -2,7 +2,10 @@ import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import icon from "../../assets/icon/151-1511569_cart-notifications-free-shopping-cart-favicon-hd-png-removebg-preview.png";
 
+import useAuth from "../../CustomHooks/useAuth";
+
 const Header = () => {
+  const { user, logOut } = useAuth();
   const navLink = (
     <>
       <li>
@@ -13,6 +16,7 @@ const Header = () => {
           Home
         </NavLink>
       </li>
+
       <li>
         <NavLink
           className={({ isActive }) => (isActive ? "text-[#EEFF25] py-2 px-4 rounded-lg" : "text-white py-2 px-4 rounded-lg")}
@@ -21,6 +25,7 @@ const Header = () => {
           Contact us
         </NavLink>
       </li>
+
       <li>
         <NavLink
           className={({ isActive }) => (isActive ? "text-[#EEFF25] py-2 px-4 rounded-lg" : "text-white py-2 px-4 rounded-lg")}
@@ -29,6 +34,7 @@ const Header = () => {
           Dashboard
         </NavLink>
       </li>
+
       <li>
         <NavLink
           className={({ isActive }) => (isActive ? "text-[#EEFF25] py-2 px-4 rounded-lg" : "text-white py-2 px-4 rounded-lg")}
@@ -37,14 +43,16 @@ const Header = () => {
           Our Menu
         </NavLink>
       </li>
+
       <li>
         <NavLink
           className={({ isActive }) => (isActive ? "text-[#EEFF25] py-2 px-4 rounded-lg" : "text-white py-2 px-4 rounded-lg")}
-          to="/shop"
+          to="/order/salad"
         >
-          Our Shop
+          Our Order
         </NavLink>
       </li>
+
       <li className="w-8">
         <NavLink
           className={({ isActive }) => (isActive ? "text-[#EEFF25] py-2 px-4 rounded-lg" : "text-white py-2 px-4 rounded-lg")}
@@ -53,14 +61,32 @@ const Header = () => {
           <img src={icon} alt="" />
         </NavLink>
       </li>
-      <li>
-        <NavLink
-          className={({ isActive }) => (isActive ? "text-[#EEFF25] py-2 px-4 rounded-lg" : "text-white py-2 px-4 rounded-lg")}
-          to="/sign-out"
-        >
-          Sign Out
-        </NavLink>
-      </li>
+
+      {user ? (
+        <>
+          <li>
+            <button
+              onClick={() => {
+                logOut();
+              }}
+              className={"text-[#EEFF25] py-2 px-4 rounded-lg"}
+            >
+              Sign Out
+            </button>
+          </li>
+        </>
+      ) : (
+        <>
+          <li>
+            <Link
+              className={({ isActive }) => (isActive ? "text-[#EEFF25] py-2 px-4 rounded-lg" : "text-white py-2 px-4 rounded-lg")}
+              to="/login"
+            >
+              Login
+            </Link>
+          </li>
+        </>
+      )}
     </>
   );
   return (

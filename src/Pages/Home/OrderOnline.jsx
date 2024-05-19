@@ -17,12 +17,6 @@ import SectionTitle from "../../CommonRoute/SectionTitle";
 const OrderOnline = () => {
   return (
     <section className="container mx-auto p-3">
-      {/* title */}
-      {/* <div className="text-center space-y-5 mt-10 ">
-        <p className="text-lg font-semibold text-[#D99904]">---From 11:00am to 10:00pm---</p>
-        <h1 className="lg:text-5xl text-3xl font-semibold py-4 border-y-4 inline-block lg:px-10 px-6">ORDER ONLINE</h1>
-      </div> */}
-
       <SectionTitle subHeading={"---From 11:00am to 10:00pm---"} heading={"ORDER ONLINE"} />
 
       {/* Slider */}

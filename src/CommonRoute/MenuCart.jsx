@@ -1,6 +1,9 @@
-const MenuCart = ({ menu }) => {
-  console.log(menu);
-  const { name, image, recipe, price } = menu;
+import { Link } from "react-router-dom";
+import Button from "./Button";
+
+const MenuCart = ({ item }) => {
+  const { name, image, recipe, price } = item;
+
   return (
     <div className="flex gap-5 items-center">
       <div className="w-[118px] h-[104px]">
