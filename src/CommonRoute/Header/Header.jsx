@@ -3,9 +3,13 @@ import logo from "../../assets/logo.png";
 import icon from "../../assets/icon/151-1511569_cart-notifications-free-shopping-cart-favicon-hd-png-removebg-preview.png";
 
 import useAuth from "../../CustomHooks/useAuth";
+import useCart from "../../Hooks/useCart";
 
 const Header = () => {
   const { user, logOut } = useAuth();
+
+  const [cart] = useCart();
+
   const navLink = (
     <>
       <li>
@@ -29,7 +33,7 @@ const Header = () => {
       <li>
         <NavLink
           className={({ isActive }) => (isActive ? "text-[#EEFF25] py-2 px-4 rounded-lg" : "text-white py-2 px-4 rounded-lg")}
-          to="/dashboard"
+          to="/dashboard/user-home"
         >
           Dashboard
         </NavLink>
@@ -54,12 +58,15 @@ const Header = () => {
       </li>
 
       <li className="w-8">
-        <NavLink
+        <Link
           className={({ isActive }) => (isActive ? "text-[#EEFF25] py-2 px-4 rounded-lg" : "text-white py-2 px-4 rounded-lg")}
-          to="/sign-out"
+          to="/dashboard/cart"
         >
-          <img src={icon} alt="" />
-        </NavLink>
+          <div>
+            <img src={icon} alt="" />
+            <p> +{cart.length}</p>
+          </div>
+        </Link>
       </li>
 
       {user ? (
@@ -89,6 +96,7 @@ const Header = () => {
       )}
     </>
   );
+
   return (
     <div className="navbar bg-black text-white bg-opacity-30 font-semibold max-w-[1920px] bg-base-100 fixed top-0 z-20">
       <div className="navbar-start">

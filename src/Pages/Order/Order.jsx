@@ -41,7 +41,7 @@ const Order = () => {
           <TabPanel>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
               {salads.map((item) => (
-                <OrderCart key={item._key} item={item} />
+                <OrderCart key={item._id} item={item} />
               ))}
             </div>
           </TabPanel>
@@ -49,7 +49,7 @@ const Order = () => {
           <TabPanel>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
               {pizza.map((item) => (
-                <OrderCart key={item._key} item={item} />
+                <OrderCart key={item._id} item={item} />
               ))}
             </div>
           </TabPanel>
@@ -57,7 +57,7 @@ const Order = () => {
           <TabPanel>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
               {soups.map((item) => (
-                <OrderCart key={item._key} item={item} />
+                <OrderCart key={item._id} item={item} />
               ))}
             </div>
           </TabPanel>
@@ -65,7 +65,7 @@ const Order = () => {
           <TabPanel>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
               {desserts.map((item) => (
-                <OrderCart key={item._key} item={item} />
+                <OrderCart key={item._id} item={item} />
               ))}
             </div>
           </TabPanel>
@@ -73,7 +73,7 @@ const Order = () => {
           <TabPanel>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
               {drinks.map((item) => (
-                <OrderCart key={item._key} item={item} />
+                <OrderCart key={item._id} item={item} />
               ))}
             </div>
           </TabPanel>

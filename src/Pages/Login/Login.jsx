@@ -4,15 +4,18 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "../../CustomHooks/useAuth";
 import Swal from "sweetalert2";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [disabled, setDisabled] = useState(true);
   const { firebaseLogin } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
-    watch,
+
     formState: { errors },
   } = useForm();
 
@@ -20,6 +23,7 @@ const Login = () => {
     firebaseLogin(data.email, data.password)
       .then((user) => {
         if (user) {
+          navigate(location?.state ? location?.state : "/");
           return Swal.fire({
             icon: "success",
             title: "Your work has been saved",
