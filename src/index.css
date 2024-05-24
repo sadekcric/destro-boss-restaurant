@@ -5,3 +5,8 @@
 .loginbg {
   background-image: url("./assets/others/authentication.png");
 }
+
+.btnBg {
+  background: linear-gradient(75deg, #835d23, #b58130);
+  color: white;
+}

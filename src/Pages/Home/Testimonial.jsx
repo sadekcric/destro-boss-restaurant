@@ -18,7 +18,6 @@ const Testimonial = () => {
         setReview(data);
       });
   }, []);
-  console.log(review);
 
   return (
     <section className="mt-10 lg:mt-24 container mx-auto p-3">

@@ -1,10 +1,15 @@
+import { updateProfile } from "firebase/auth";
 import useAuth from "../../CustomHooks/useAuth";
 import img from "../../assets/others/authentication2.png";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const { firebaseRegister } = useAuth();
+  const AxiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
+  const { firebaseRegister, logOut } = useAuth();
   const {
     register,
     handleSubmit,
@@ -12,15 +17,45 @@ const Register = () => {
   } = useForm();
 
   const handleRegister = (data) => {
-    firebaseRegister(data.email, data.password).then((user) => {
-      if (user) {
-        return Swal.fire({
-          icon: "success",
-          title: "Registered Successful",
-          showConfirmButton: false,
-          timer: 1500,
+    firebaseRegister(data.email, data.password).then(({ user }) => {
+      updateProfile(user, {
+        displayName: data.name,
+        photoURL: data.photo,
+      })
+        .then(() => {
+          const userInfo = { name: data.name, email: data.email };
+          AxiosPublic.post("/users", userInfo)
+
+            .then((data) => {
+              console.log(data);
+              logOut();
+              navigate("/login");
+              return Swal.fire({
+                icon: "success",
+                title: "Registered Successful",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            })
+
+            .catch((err) => {
+              return Swal.fire({
+                icon: "error",
+                title: err.message,
+                showConfirmButton: false,
+                timer: 3000,
+              });
+            });
+        })
+
+        .catch((err) => {
+          return Swal.fire({
+            icon: "error",
+            title: err.message,
+            showConfirmButton: false,
+            timer: 3000,
+          });
         });
-      }
     });
   };
 
@@ -31,17 +66,26 @@ const Register = () => {
           <img src={img} alt="" />
         </div>
 
+        <input type="file" name="" id="" />
+
         <div className="flex-1">
           <h2 className="text-3xl mb-5 text-center font-bold"> LOGIN</h2>
           <form onSubmit={handleSubmit(handleRegister)} className="space-y-3">
             <div>
               <p className="font-semibold">Name:</p>
-              <input type="name" {...register("name", { required: true })} className="py-3 px-4 w-full inline-block" required />
+              <input type="text" {...register("name", { required: true })} className="py-3 px-4 w-full inline-block" required />
               {errors.name && <span className="font-semibold text-red-600">This field is required</span>}
             </div>
+
             <div>
               <p className="font-semibold">Email:</p>
               <input type="email" {...register("email", { required: true })} className="py-3 px-4 w-full inline-block" required />
+            </div>
+
+            <div>
+              <p className="font-semibold">Photo URL:</p>
+              <input type="text" {...register("photo", { required: true })} className="py-3 px-4 w-full inline-block" required />
+              {errors.photo && <span className="font-semibold text-red-600">This field is required</span>}
             </div>
 
             <div>

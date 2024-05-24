@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import useAuth from "../../CustomHooks/useAuth";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
+import SocialLogin from "../../Component/SocialLogin";
 
 const Login = () => {
   const [disabled, setDisabled] = useState(true);
@@ -95,6 +96,7 @@ const Login = () => {
               <input disabled={disabled} type="submit" value={"Submit"} className="py-3 px-4 bg-[#D1A054] text-white w-full inline-block" />
             </div>
           </form>
+          <SocialLogin />
         </div>
       </div>
     </div>

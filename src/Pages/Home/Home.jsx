@@ -5,18 +5,21 @@ import Featured from "./Featured";
 import OrderOnline from "./OrderOnline";
 import OurMenu from "./OurMenu";
 import Testimonial from "./Testimonial";
+import { motion, useScroll } from "framer-motion";
 
 const Home = () => {
   return (
-    <div>
-      <Banner />
-      <OrderOnline />
-      <BistroSection />
-      <OurMenu />
-      <Callus />
-      <Featured />
-      <Testimonial />
-    </div>
+    <>
+      <div>
+        <Banner />
+        <OrderOnline />
+        <BistroSection />
+        <OurMenu />
+        <Callus />
+        <Featured />
+        <Testimonial />
+      </div>
+    </>
   );
 };
 
