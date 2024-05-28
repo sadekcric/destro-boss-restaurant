@@ -18,6 +18,8 @@ import AddItmes from "../Pages/Admin/AddItmes";
 import AllUsers from "../Pages/Admin/AllUsers";
 import ManageBooking from "../Pages/Admin/ManageBooking";
 import ManageItems from "../Pages/Admin/ManageItems";
+import UpdateMenu from "./../Pages/Admin/UpdateMenu";
+import Payment from "../Pages/UserHome/Payment";
 
 const router = createBrowserRouter([
   {
@@ -63,6 +65,10 @@ const router = createBrowserRouter([
         element: <UserHome />,
       },
       {
+        path: "/dashboard/payment",
+        element: <Payment />,
+      },
+      {
         path: "/dashboard/cart",
         element: <Cart />,
       },
@@ -101,6 +107,11 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/manage-items",
         element: <ManageItems />,
+      },
+      {
+        path: "/dashboard/manage-items/:id",
+        element: <UpdateMenu />,
+        loader: ({ params }) => fetch(`http://localhost:5000/menu/${params.id}`),
       },
     ],
   },

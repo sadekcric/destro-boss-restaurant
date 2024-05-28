@@ -3,6 +3,7 @@ import { MdDelete } from "react-icons/md";
 import useCart from "../../Hooks/useCart";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const [items, refetch] = useCart();
@@ -54,7 +55,17 @@ const Cart = () => {
           <p className="text-3xl font-semibold ">Total Order: {items.length}</p>
           <p className="text-3xl font-semibold ">Total Price: ${fuggerPrice}</p>
           <div>
-            <button className="py-2 px-4 font-semibold text-lg bg-[#D1A054] rounded-md">PAY</button>
+            {items.length ? (
+              <>
+                <Link to="/dashboard/payment">
+                  <button className="py-2 px-4 font-semibold text-lg bg-[#D1A054] rounded-md">PAY</button>
+                </Link>
+              </>
+            ) : (
+              <button disabled className="py-2 px-4 font-semibold text-lg bg-gray-200 rounded-md">
+                PAY
+              </button>
+            )}
           </div>
         </div>
 

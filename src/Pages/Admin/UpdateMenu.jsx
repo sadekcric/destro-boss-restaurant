@@ -1,20 +1,31 @@
-import { useNavigate } from "react-router-dom";
+import { Navigate, useLoaderData, useParams } from "react-router-dom";
 import AddItemTable from "../../CommonRoute/AddItemTable";
 import SectionTitle from "../../CommonRoute/SectionTitle";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+
 import useUploadImage from "../../Hooks/useUploadImage";
-import useAxiosSecure from "./../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 
-const AddItmes = () => {
+const UpdateMenu = () => {
+  const item = useLoaderData();
   const imgUpload = useUploadImage();
+  console.log(item.name);
+
   const axiosSecure = useAxiosSecure();
-  const navigate = useNavigate();
+
+  // const { data } = useQuery({
+  //   queryKey: ["updateProduct"],
+  //   queryFn: async () => {
+  //     const data = await axiosSecure.put(`/menu/${id}`);
+  //     return data.data;
+  //   },
+  // });
 
   const onSubmit = async (data) => {
     const fileImage = { image: data.image[0] };
     const res = await imgUpload(fileImage);
 
-    const uploadData = {
+    const updated = {
       name: data.name,
       category: data.category,
       price: data.price,
@@ -24,13 +35,13 @@ const AddItmes = () => {
 
     if (res.data.data.display_url) {
       axiosSecure
-        .post("/menu", uploadData)
+        .put("/menu", updated)
         .then((res) => {
           if (res.data.insertedId) {
-            navigate("/menu");
+            Navigate("/menu");
             return Swal.fire({
               icon: "success",
-              title: `${uploadData.name} successfully added`,
+              title: `${updated.name} successfully added`,
               showConfirmButton: false,
               timer: 1500,
             });
@@ -48,12 +59,14 @@ const AddItmes = () => {
   };
 
   return (
-    <div className="mt-10 ">
-      <SectionTitle heading={"Add an Item"} subHeading={"---What's New?---"} />
+    <div>
+      <SectionTitle heading={"Update Your Menu"} subHeading={"--Hurry Up--"} />
 
-      <AddItemTable onSubmit={onSubmit} />
+      <div className="mt-10 lg:mt-24  ">
+        <AddItemTable value={item} onSubmit={onSubmit} />
+      </div>
     </div>
   );
 };
 
-export default AddItmes;
+export default UpdateMenu;

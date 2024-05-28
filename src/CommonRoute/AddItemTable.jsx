@@ -1,33 +1,12 @@
+/* eslint-disable react/prop-types */
 import { useForm } from "react-hook-form";
-import useAxiosPublic from "../Hooks/useAxiosPublic";
-import useUploadImage from "../Hooks/useUploadImage";
-const image_api_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
-const image_api_url = `https://api.imgbb.com/1/upload?key=${image_api_key}`;
 
-const AddItemTable = ({ value }) => {
-  const axiosPublic = useAxiosPublic();
-
+const AddItemTable = ({ value, onSubmit }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  const imgUpload = useUploadImage();
-
-  const onSubmit = async (data) => {
-    const fileImage = { image: data.image[0] };
-
-    const res = await imgUpload(fileImage);
-    console.log(res);
-    // const imgLink = await axiosPublic.post(image_api_url, fileImage, {
-    //   headers: {
-    //     "content-type": "multipart/form-data",
-    //   },
-    // });
-
-    // console.log(imgLink);
-  };
 
   return (
     <div className="lg:w-3/4 flex items-center py-10 bg-gray-200 mt-10 rounded-2xl mx-auto">
@@ -88,11 +67,10 @@ const AddItemTable = ({ value }) => {
 
         <div>
           <label htmlFor="details">
-            <p defaultValue={value?.details} className="font-semibold mb-2">
-              Recipe Details*
-            </p>
+            <p className="font-semibold mb-2">Recipe Details*</p>
             <textarea
               {...register("recipe", { required: true })}
+              defaultValue={value?.recipe}
               id="recipe"
               placeholder="Recipe Details "
               className="py-2 px-3 w-full"
@@ -104,9 +82,10 @@ const AddItemTable = ({ value }) => {
         </div>
 
         <div>
-          <input {...register("image", { required: true })} type="file" defaultValue={value?.image} className="block" />
+          <input {...register("image", { required: true })} type="file" className="block" />
           {errors.image && <span className="text-red-600 font-semibold">This field is required</span>}
         </div>
+
         <div>
           <input type="submit" className="py-3 px-6 bg-gradient-to-r btnBg " value={"Add Item"} />
         </div>

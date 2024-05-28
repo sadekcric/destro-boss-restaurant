@@ -1,18 +1,25 @@
-import { useEffect, useState } from "react";
 import SectionTitle from "../../CommonRoute/SectionTitle";
 import MenuCart from "../../CommonRoute/MenuCart";
+// import { axios } from "axios";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
 
 const OurMenu = () => {
-  const [popularMenus, setPopularMenus] = useState([]);
+  const axiosPublic = useAxiosPublic();
 
-  useEffect(() => {
-    fetch(`/http://localhost:5000/menu`)
-      .then((res) => res.json())
-      .then((data) => {
-        const popularMenu = data.filter((d) => d.category === "popular");
-        setPopularMenus(popularMenu);
-      });
-  }, []);
+  const { data, isPending } = useQuery({
+    queryKey: ["popularMenu"],
+    queryFn: async () => {
+      const data = await axiosPublic.get("/menu");
+      return data.data;
+    },
+  });
+
+  if (isPending) {
+    return;
+  }
+
+  const popularMenus = data.filter((d) => d.category === "popular");
 
   return (
     <section className="lg:mt-24 mb-10 container mx-auto p-3">
